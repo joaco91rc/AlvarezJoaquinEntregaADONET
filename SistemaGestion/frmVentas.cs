@@ -1,5 +1,6 @@
 ﻿using CapaDatos;
 using CapaEntidad;
+using CapaNegocio;
 using SistemaGestion.Utilidades;
 using System;
 using System.Collections.Generic;
@@ -23,17 +24,19 @@ namespace SistemaGestion
         private void CargarLista()
         {
             dgvData.Rows.Clear();
-            List<Venta> listaVentas = VentaData.ListarVentas();
+            List<Venta> listaVentas = new CN_Venta().ListarVentas();
             
             foreach (Venta item in listaVentas)
             {
-                Usuario usuario = UsuarioData.ObtenerUsuario(item.idUsuario);
+                Usuario usuario = CN_Usuario.ObtenerUsuario(item.idUsuario);
                 dgvData.Rows.Add(new object[] { "", item.id, usuario.nombreUsuario,item.idUsuario, item.comentarios });
             }
         }
 
         private void frmVentas_Load(object sender, EventArgs e)
         {
+            lblOperacion.Text = "ALTA NUEVA VENTA";
+
             foreach (DataGridViewColumn columna in dgvData.Columns)
             {
 
@@ -119,9 +122,9 @@ namespace SistemaGestion
             if (txtIdVenta.Text == "0")
             {
 
-                VentaData.CrearVenta(objVenta);
+                CN_Venta.CrearVenta(objVenta);
 
-                Usuario usuario = UsuarioData.ObtenerUsuario(objVenta.idUsuario);
+                Usuario usuario = CN_Usuario.ObtenerUsuario(objVenta.idUsuario);
 
                 dgvData.Rows.Add(new object[] { "", txtIdVenta.Text, txtNombreUsuario.Text, txtIdUsuario.Text, txtComentarios.Text });
 
@@ -133,7 +136,7 @@ namespace SistemaGestion
             else
             {
 
-                VentaData.ModificarVenta(objVenta);
+                CN_Venta.ModificarVenta(objVenta);
                 if (txtIdVenta.Text != "0")
                 {
                     DataGridViewRow row = dgvData.Rows[Convert.ToInt32(txtIndice.Text)];
@@ -165,7 +168,7 @@ namespace SistemaGestion
         {
             if (e.KeyData == Keys.Enter)
             {
-                Usuario usuario = UsuarioData.ObtenerUsuario(Convert.ToInt32(txtIdUsuario.Text));
+                Usuario usuario = CN_Usuario.ObtenerUsuario(Convert.ToInt32(txtIdUsuario.Text));
                 txtNombreUsuario.Text =usuario.nombreUsuario;
                 
 
@@ -198,6 +201,20 @@ namespace SistemaGestion
             txtBusqueda.Clear();
             foreach (DataGridViewRow row in dgvData.Rows)
                 row.Visible = true;
+        }
+
+        private void txtIdVenta_TextChanged(object sender, EventArgs e)
+        {
+
+            if (txtIdVenta.Text == "0")
+                lblOperacion.Text = "ALTA NUEVA VENTA";
+            else
+                lblOperacion.Text = "MODIFICAR VENTA";
+        }
+
+        private void btnLimpiarDatos_Click(object sender, EventArgs e)
+        {
+            Limpiar();
         }
     }
     }

@@ -46,7 +46,7 @@ namespace SistemaGestion
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblOperacion = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
             this.btnSeleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
@@ -117,6 +117,7 @@ namespace SistemaGestion
             this.txtIndice.Size = new System.Drawing.Size(36, 18);
             this.txtIndice.TabIndex = 118;
             this.txtIndice.Text = "-1";
+            this.txtIndice.Visible = false;
             // 
             // txtIdProductoVendido
             // 
@@ -129,6 +130,8 @@ namespace SistemaGestion
             this.txtIdProductoVendido.Size = new System.Drawing.Size(36, 18);
             this.txtIdProductoVendido.TabIndex = 112;
             this.txtIdProductoVendido.Text = "0";
+            this.txtIdProductoVendido.Visible = false;
+            this.txtIdProductoVendido.TextChanged += new System.EventHandler(this.txtIdProductoVendido_TextChanged);
             // 
             // txtProductoSeleccionado
             // 
@@ -137,7 +140,7 @@ namespace SistemaGestion
             this.txtProductoSeleccionado.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtProductoSeleccionado.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtProductoSeleccionado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
-            this.txtProductoSeleccionado.Location = new System.Drawing.Point(155, 700);
+            this.txtProductoSeleccionado.Location = new System.Drawing.Point(219, 700);
             this.txtProductoSeleccionado.Name = "txtProductoSeleccionado";
             this.txtProductoSeleccionado.Size = new System.Drawing.Size(206, 18);
             this.txtProductoSeleccionado.TabIndex = 120;
@@ -160,9 +163,9 @@ namespace SistemaGestion
             this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
             this.label13.Location = new System.Drawing.Point(6, 700);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(143, 17);
+            this.label13.Size = new System.Drawing.Size(207, 17);
             this.label13.TabIndex = 119;
-            this.label13.Text = "Usuario Seleccionado:";
+            this.label13.Text = "Producto Vendido Seleccionado:";
             // 
             // txtIdVenta
             // 
@@ -224,17 +227,17 @@ namespace SistemaGestion
             this.label3.TabIndex = 95;
             this.label3.Text = "Venta Numero";
             // 
-            // label9
+            // lblOperacion
             // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label9.Location = new System.Drawing.Point(6, 24);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(288, 32);
-            this.label9.TabIndex = 104;
-            this.label9.Text = "PRODUCTOS VENDIDOS";
+            this.lblOperacion.AutoSize = true;
+            this.lblOperacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.lblOperacion.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOperacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.lblOperacion.Location = new System.Drawing.Point(6, 24);
+            this.lblOperacion.Name = "lblOperacion";
+            this.lblOperacion.Size = new System.Drawing.Size(288, 32);
+            this.lblOperacion.TabIndex = 104;
+            this.lblOperacion.Text = "PRODUCTOS VENDIDOS";
             // 
             // label2
             // 
@@ -548,7 +551,7 @@ namespace SistemaGestion
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label9);
+            this.Controls.Add(this.lblOperacion);
             this.Controls.Add(this.txtIdProducto);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -586,7 +589,7 @@ namespace SistemaGestion
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblOperacion;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dgvData;
         private System.Windows.Forms.Label label1;

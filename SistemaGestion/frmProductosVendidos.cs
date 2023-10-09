@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CapaNegocio;
 
 namespace SistemaGestion
 {
@@ -23,18 +24,20 @@ namespace SistemaGestion
         private void CargarLista()
         {
             dgvData.Rows.Clear();
-            List<ProductoVendido> listaProductosVendidos = ProductoVendidoData.ListarProductoVendidos();
+            List<ProductoVendido> listaProductosVendidos = new CN_ProductoVendido().ListarProductoVendidos();
 
             dgvData.Columns["PrecioVenta"].DefaultCellStyle.Format = "N2";
             foreach (ProductoVendido item in listaProductosVendidos)
             {
-                Producto producto = ProductoData.ObtenerProducto(item.productoId);
+                
+                Producto producto = CN_Producto.ObtenerProducto(item.productoId);
                 dgvData.Rows.Add(new object[] { "", item.id, item.productoId, producto.descripciones, item.stock, producto.precioVenta, item.ventaId });
             }
         }
 
         private void frmProductosVendidos_Load(object sender, EventArgs e)
         {
+            lblOperacion.Text = "ALTA NUEVO PRODUCTO VENDIDO";
             foreach (DataGridViewColumn columna in dgvData.Columns)
             {
 
@@ -120,7 +123,7 @@ namespace SistemaGestion
         {
             if (e.KeyData == Keys.Enter)
             {
-                Producto producto = ProductoData.ObtenerProducto(Convert.ToInt32(txtIdProducto.Text));
+                Producto producto = CN_Producto.ObtenerProducto(Convert.ToInt32(txtIdProducto.Text));
                 txtDescripciones.Text = producto.descripciones;
                 txtPrecioVenta.Value = producto.precioVenta;
                 txtStock.Select();
@@ -146,7 +149,7 @@ namespace SistemaGestion
             if (txtIdProductoVendido.Text == "0")
             {
 
-                ProductoVendidoData.CrearProductoVendido(objProductoVendido);
+                CN_ProductoVendido.CrearProductoVendido(objProductoVendido);
 
 
 
@@ -160,7 +163,7 @@ namespace SistemaGestion
             else
             {
 
-                ProductoVendidoData.ModificarProductoVendido(objProductoVendido);
+                CN_ProductoVendido.ModificarProductoVendido(objProductoVendido);
                 if (txtIdProductoVendido.Text != "0")
                 {
                     DataGridViewRow row = dgvData.Rows[Convert.ToInt32(txtIndice.Text)];
@@ -194,13 +197,13 @@ namespace SistemaGestion
                 if (MessageBox.Show("Desea eliminar el Producto Vendido?", "Confirmar Eliminacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
 
-                    Producto objProducto = new Producto()
+                    ProductoVendido objProducto = new ProductoVendido()
                     {
                         id = Convert.ToInt32(txtIdProducto.Text),
                         
                     };
 
-                    ProductoData.Eliminar(objProducto);
+                    CN_ProductoVendido.EliminarProductoVendido(objProducto);
 
 
 
@@ -251,6 +254,15 @@ namespace SistemaGestion
             txtBusqueda.Clear();
             foreach (DataGridViewRow row in dgvData.Rows)
                 row.Visible = true;
+        }
+
+        private void txtIdProductoVendido_TextChanged(object sender, EventArgs e)
+        {
+
+            if (txtIdProductoVendido.Text == "0")
+                lblOperacion.Text = "ALTA NUEVO PRODUCTO VENIDO";
+            else
+                lblOperacion.Text = "MODIFICAR PRODUCTO VENDIDO";
         }
     }
 }

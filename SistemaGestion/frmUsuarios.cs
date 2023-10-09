@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CapaNegocio;
 
 namespace SistemaGestion
 {
@@ -23,7 +24,7 @@ namespace SistemaGestion
         private void CargarLista()
         {
             dgvData.Rows.Clear();
-            List<Usuario> listaUsuario = UsuarioData.ListarUsuarios();
+            List<Usuario> listaUsuario = new CN_Usuario().ListarUsuarios();
 
             foreach (Usuario item in listaUsuario)
             {
@@ -32,6 +33,10 @@ namespace SistemaGestion
         }
         private void frmUsuarios_Load(object sender, EventArgs e)
         {
+            if (txtIdUsuario.Text == "0")
+                lblOperacion.Text = "ALTA NUEVO USUARIO";
+            
+
             foreach (DataGridViewColumn columna in dgvData.Columns)
             {
 
@@ -128,8 +133,8 @@ namespace SistemaGestion
 
             if (txtIdUsuario.Text == "0")
             {
-
-                 UsuarioData.CrearUsuario(objUsuario);
+                CN_Usuario.CrearUsuario(objUsuario);
+                 
 
 
                 
@@ -142,10 +147,11 @@ namespace SistemaGestion
             }
             else
             {
+                
 
-                UsuarioData.ModificarUsuario(objUsuario);
                 if (txtIdUsuario.Text !="0")
                 {
+                    CN_Usuario.ModificarUsuario(objUsuario);
                     DataGridViewRow row = dgvData.Rows[Convert.ToInt32(txtIndice.Text)];
                     row.Cells["Id"].Value = txtIdUsuario.Text;
                     row.Cells["Nombre"].Value = txtNombre.Text;
@@ -153,7 +159,7 @@ namespace SistemaGestion
                     row.Cells["NombreUsuario"].Value = txtNombreUsuario.Text;
                     row.Cells["Contrasenia"].Value = txtContrasenia.Text;
                     row.Cells["Mail"].Value = txtMail.Text;
-
+                    
 
 
                     Limpiar();
@@ -187,7 +193,7 @@ namespace SistemaGestion
 
                     };
 
-                    UsuarioData.Eliminar(objUsuario);
+                    CN_Usuario.EliminarUsuario(objUsuario);
 
                      
 
@@ -236,6 +242,14 @@ namespace SistemaGestion
             txtBusqueda.Clear();
             foreach (DataGridViewRow row in dgvData.Rows)
                 row.Visible = true;
+        }
+
+        private void txtIdUsuario_TextChanged(object sender, EventArgs e)
+        {
+            if (txtIdUsuario.Text == "0")
+                lblOperacion.Text = "ALTA NUEVO USUARIO";
+            else
+                lblOperacion.Text = "MODIFICAR USUARIO";
         }
     }
 }

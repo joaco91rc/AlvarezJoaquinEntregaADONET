@@ -134,6 +134,10 @@
       <Project>{8B4C1A04-A570-414C-8CE8-C3A76CD885BC}</Project>
       <Name>CapaEntidad</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CapaNegocio\CapaNegocio.csproj">
+      <Project>{e43d14ca-0d22-451f-a06a-d394657375ba}</Project>
+      <Name>CapaNegocio</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\check20.png" />

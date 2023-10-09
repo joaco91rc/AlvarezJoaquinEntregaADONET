@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CapaNegocio;
 
 namespace SistemaGestion
 {
@@ -23,7 +24,7 @@ namespace SistemaGestion
         private void CargarLista()
         {
             dgvData.Rows.Clear();
-            List<Producto> listaProducto = ProductoData.ListarProductos();
+            List<Producto> listaProducto = new CN_Producto().ListarProductos();
             dgvData.Columns["Costo"].DefaultCellStyle.Format = "N2";
             dgvData.Columns["PrecioVenta"].DefaultCellStyle.Format = "N2";
             foreach (Producto item in listaProducto)
@@ -33,6 +34,7 @@ namespace SistemaGestion
         }
         private void frmProductos_Load(object sender, EventArgs e)
         {
+            lblOperacion.Text = "ALTA NUEVO PRODUCTO";
             foreach (DataGridViewColumn columna in dgvData.Columns)
             {
 
@@ -123,7 +125,7 @@ namespace SistemaGestion
             if (txtIdProducto.Text == "0")
             {
 
-                ProductoData.CrearProducto(objProducto);
+                CN_Producto.CrearProducto(objProducto);
 
 
 
@@ -137,7 +139,7 @@ namespace SistemaGestion
             else
             {
 
-                ProductoData.ModificarProducto(objProducto);
+                CN_Producto.ModificarProducto(objProducto);
                 if (txtIdProducto.Text != "0")
                 {
                     DataGridViewRow row = dgvData.Rows[Convert.ToInt32(txtIndice.Text)];
@@ -186,7 +188,7 @@ namespace SistemaGestion
 
                     };
 
-                    ProductoData.Eliminar(objProducto);
+                    ProductoData.EliminarProducto(objProducto);
 
 
 
@@ -223,7 +225,7 @@ namespace SistemaGestion
                         row.Visible = true;
                     else
                         row.Visible = false;
-
+                    
 
                 }
 
@@ -235,6 +237,15 @@ namespace SistemaGestion
             txtBusqueda.Clear();
             foreach (DataGridViewRow row in dgvData.Rows)
                 row.Visible = true;
+        }
+
+        private void txtIdProducto_TextChanged(object sender, EventArgs e)
+        {
+
+            if (txtIdProducto.Text == "0")
+                lblOperacion.Text = "ALTA NUEVO PRODUCTO";
+            else
+                lblOperacion.Text = "MODIFICAR PRODUCTO";
         }
     }
 }
